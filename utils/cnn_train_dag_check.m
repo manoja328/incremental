@@ -112,10 +112,10 @@ for epoch=start+1:opts.numEpochs
   end
 
   disp("Train Statistics .....")
-  disp(stats.train)
+  disp(stats.train(end))
 
   disp("Test Statistics .....")
-  disp(stats.val)
+  disp(stats.val(end))
 
   if opts.plotStatistics
     switchFigure(1) ; clf ;
