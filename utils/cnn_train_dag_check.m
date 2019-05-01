@@ -17,13 +17,15 @@ opts.train = [] ;
 opts.val = [] ;
 opts.gpus = [] ;
 opts.prefetch = false ;
-opts.numEpochs = 300 ;
-opts.learningRate = 0.001 ;
-opts.weightDecay = 0.0005 ;
+opts.numEpochs = net.meta.trainOpts.numEpochs;
+opts.learningRate = net.meta.trainOpts.learningRate;
+opts.weightDecay = 0.0001;
 opts.momentum = 0.9 ;
 opts.randomSeed = 0 ;
 opts.memoryMapFile = fullfile(tempdir, 'matconvnet.bin') ;
 opts.profile = false ;
+
+disp(opts);
 
 opts.derOutputs = {'objective', 1} ;
 opts.extractStatsFn = @extractStats ;
@@ -76,6 +78,7 @@ for epoch=start+1:opts.numEpochs
 
   state.epoch = epoch ;
   state.learningRate = opts.learningRate(min(epoch, numel(opts.learningRate))) ;
+  fprintf("Epoch: %d  LR: %f\n",state.epoch,state.learningRate);
   state.train = opts.train(randperm(numel(opts.train))) ; % shuffle
   state.val = opts.val(randperm(numel(opts.val))) ;
   state.imdb = imdb ;
@@ -111,11 +114,12 @@ for epoch=start+1:opts.numEpochs
     saveState(modelPath(epoch), net, stats) ;
   end
 
-  disp("Train Statistics .....")
-  disp(stats.train(end))
+   disp("Train Statistics .....")
+   disp(stats.train(end))
 
-  disp("Test Statistics .....")
-  disp(stats.val(end))
+   disp("Test Statistics .....")
+   disp(stats.val(end))
+
 
   if opts.plotStatistics
     switchFigure(1) ; clf ;

@@ -10,9 +10,10 @@ opts.datasetName = 'ILSVRC2012_base';
 opts.datafn = @setup_imdb_imagenet100;
 [opts,varargin] = vl_argparse(opts, varargin) ;
 
-opts.dataDir = fullfile('data',opts.datasetName) ;
+dataDir = fullfile('data',opts.datasetName);
+opts.dataDir = dataDir;
 opts.imdb       = [];
-opts.networkType = 'resnet' ;
+opts.networkType = 'resnet';
 opts.expDir     = fullfile('data','exp', ...
     sprintf('%s-%s-%d', opts.datasetName, opts.networkType , n)) ;
 
@@ -67,8 +68,8 @@ else
 end
 
 % Set the image average (use either an image or a color)
-net.meta.normalization.averageImage = averageImage ;
-%net.meta.normalization.averageImage = rgbMean ;
+%net.meta.normalization.averageImage = averageImage ;
+net.meta.normalization.averageImage = rgbMean ;
 
 % Set data augmentation statistics
 [v,d] = eig(rgbCovariance) ;
@@ -85,7 +86,7 @@ trainfn = @cnn_train_dag_check;
   net.meta.trainOpts, ...
   'gpus', opts.gpus, ...
   'batchSize',opts.batchSize,...
-  'numEpochs',opts.numEpochs,...
+  'numEpochs',net.meta.trainOpts.numEpochs,...
   'val', find(imdb.images.set == 3), ...
   'derOutputs', {'loss', 1}, ...
   'checkpointFn', opts.checkpointFn) ;
