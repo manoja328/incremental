@@ -25,8 +25,9 @@ for c = 1:length(imdb.images.data),
    else   % test ( which is val in imagenet)  
        curr_name = fullfile('data/ILSVRC2012','val',folder,file);	
    end
-   imdb.images.name = [imdb.images.name curr_name]; 
+   %imdb.images.name{c} = curr_name; 
+   imdb.images.name = cat(2,imdb.images.name,curr_name);
 
 end
 
-fprintf(' done!\n');
+fprintf('done ...........\n');
