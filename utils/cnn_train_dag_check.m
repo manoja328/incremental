@@ -11,7 +11,7 @@ function [net,stats] = cnn_train_dag_check(net, imdb, getBatch, varargin)
 
 opts.expDir = fullfile('data','exp') ;
 opts.continue = true ;
-opts.batchSize = 256 ;
+opts.batchSize = net.meta.trainOpts.batchSize;
 opts.numSubBatches = 1 ;
 opts.train = [] ;
 opts.val = [] ;
@@ -19,11 +19,11 @@ opts.gpus = [] ;
 opts.prefetch = false ;
 opts.numEpochs = net.meta.trainOpts.numEpochs;
 opts.learningRate = net.meta.trainOpts.learningRate;
-opts.weightDecay = 0.0001;
-opts.momentum = 0.9 ;
+opts.weightDecay = net.meta.trainOpts.weightDecay;
+opts.momentum = net.meta.trainOpts.momentum;
 opts.randomSeed = 0 ;
 opts.memoryMapFile = fullfile(tempdir, 'matconvnet.bin') ;
-opts.profile = false ;
+opts.profile = false;
 
 disp(opts);
 
@@ -114,11 +114,11 @@ for epoch=start+1:opts.numEpochs
     saveState(modelPath(epoch), net, stats) ;
   end
 
-   disp("Train Statistics .....")
-   disp(stats.train(end))
+  disp("Train Statistics .....")
+  disp(stats.train(end))
 
-   disp("Test Statistics .....")
-   disp(stats.val(end))
+  disp("Test Statistics .....")
+  disp(stats.val(end))
 
 
   if opts.plotStatistics
