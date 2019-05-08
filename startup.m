@@ -1,4 +1,2 @@
-addpath(genpath(pwd));
+%addpath(genpath(pwd));
 run setup.m
-
-

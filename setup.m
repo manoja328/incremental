@@ -6,6 +6,7 @@ function setup(doCompile, matconvnetOpts)
 %   matconvnetOpts:: struct('enableGpu',false)
 %       Options for vl_compilenn
 
+fprintf("nargin: %d\n",nargin);
 if nargin==0, 
     doCompile = false;
 elseif nargin<2, 
