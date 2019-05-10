@@ -5,11 +5,11 @@ max_iters = 1;
 nclasses = 1000;
 %batch_sizes = [100];
 %[[100] ; ones(90,1)*10]
-batch_sizes = [100,10]; % for tylers 100 and then 10 , 10
+batch_sizes = [100]; % for tylers 100 and then 10 , 10
 imdb_path = 'data/ILSVRC2012/train';
 imdbtest_path = 'data/ILSVRC2012/val';
 val_ground_truth = 'data/ILSVRC2012/ILSVRC2012_validation_ground_truth.txt';
-outdir = 'data/ImageNet_incremental';
+outdir = 'data/ImageNet_incremental_old';
 
 %% Split into small im
 classes_dirs = importdata('data/icarl_sorted.txt');
@@ -35,7 +35,7 @@ for nit=1:max_iters
             classes = order(in:en); 
             
             %% Initialize imdb
-            imdb.images.data = {};
+            imdb.images.name = {};
             imdb.images.folders = {};
             imdb.images.classes = [];
             imdb.images.labels = [];
@@ -53,7 +53,7 @@ for nit=1:max_iters
                 set = zeros(1, length(files)) + 1;
                 
                 % Cat
-                imdb.images.data = cat(2, imdb.images.data, data);
+                imdb.images.name = cat(2, imdb.images.name, data);
                 imdb.images.folders = cat(2, imdb.images.folders, folders);
                 imdb.images.classes = cat(2, imdb.images.classes, labels);
                 imdb.images.labels = cat(2, imdb.images.labels, labels);
@@ -73,7 +73,7 @@ for nit=1:max_iters
                 set = zeros(1, length(pos)) + 3;
                 
                 % Cat
-                imdb.images.data = cat(2, imdb.images.data, data);
+                imdb.images.name = cat(2, imdb.images.name, data);
                 imdb.images.folders = cat(2, imdb.images.folders, folders);
                 imdb.images.classes = cat(2, imdb.images.classes, labels);
                 imdb.images.labels = cat(2, imdb.images.labels, labels);
